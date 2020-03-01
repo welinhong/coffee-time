@@ -78,7 +78,7 @@
       </div>
 
       <div v-for="group in randomGroupListWithName" :key="group[0]">
-        <h-tag v-for="member in group" :key="member[0]">{{ member }}</h-tag>
+        <h-tag v-for="member in group" :key="member">{{ member }}</h-tag>
       </div>
     </div>
 
@@ -187,7 +187,7 @@ export default {
         const payload = {
           memberList: group,
           eventStartTime: new Date(startTime),
-          evnetId,
+          eventId,
         }
         const { data, status } = await this.postGroup(payload)
       })
