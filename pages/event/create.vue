@@ -189,13 +189,6 @@ export default {
         if (status === 200) groupIds.push(data)
       })
 
-      // TODO: event를 업데이트 해준다..? - groups
-      if (groupIds.length > 0) {
-        await this.$axios.patch(`/event/${eventId}`, {
-          groups: groupIds
-        })
-      }
-
       // 기존 데이터에 입력했던 모두 리셋 + 성공했다는 메시지 출력
       this.form = {
         title: '',
