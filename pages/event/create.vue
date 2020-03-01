@@ -181,12 +181,15 @@ export default {
       if (status !== 200) return
 
       const eventId = data._id
-      const groupIds = []
 
       // TODO: Promise.all 사용
       this.randomGroupList.map(async (group) => {
-        const { data, status } = await this.postGroup(group, eventId)
-        if (status === 200) groupIds.push(data)
+        const payload = {
+          memberList: group,
+          eventStartTime: new Date(startTime),
+          evnetId,
+        }
+        const { data, status } = await this.postGroup(payload)
       })
 
       // 기존 데이터에 입력했던 모두 리셋 + 성공했다는 메시지 출력
@@ -204,10 +207,9 @@ export default {
 
       this.$router.push('/event')
     },
-    async postGroup(memberList = [], eventId) {
+    async postGroup(payload) {
       const result = await this.$axios.post('/group', {
-        memberList,
-        eventId
+        ...payload
       })
       return result
     }
