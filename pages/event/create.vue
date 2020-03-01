@@ -161,12 +161,16 @@ export default {
         createTimeFrom: `${this.formatDate(createTimeFrom)} 00:00:00`,
         createTimeTo: `${this.formatDate(createTimeTo)} 23:59:59`
       })
-
-      if (status === 200) {
+      if (status === 200 && data.valid) {
         this.randomGroupList = data.groupList
         this.randomGroupListWithName = data.groupList.map((group) =>
           group.map((memberId) => this.memberMap[memberId])
         )
+      } else if (status === 200 && !data.valid) {
+        this.$toast({
+          title: '더 이상의 경우의 수가 없습니다. 기간을 변경해주세요.',
+          theme: 'error'
+        })
       }
     },
     async addEvent() {
