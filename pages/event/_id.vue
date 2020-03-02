@@ -17,21 +17,21 @@
     <form-container>
       <template #label>기간</template>
       <template #value>
-        {{ detail.startTime }} - {{ detail.endTime }}
+        {{ formatDate(detail.startTime) }} ~ {{ formatDate(detail.endTime) }}
       </template>
     </form-container>
 
     <form-container>
       <template #label>생성일</template>
       <template #value>
-        {{ detail.createTime }}
+        {{ formatDate(detail.createTime) }}
       </template>
     </form-container>
 
     <form-container>
       <template #label>수정일</template>
       <template #value>
-        {{ detail.updateTime }}
+        {{ formatDate(detail.updateTime) }}
       </template>
     </form-container>
 
@@ -51,9 +51,11 @@
 
 <script>
 import FormContainer from '@/components/common/FormContainer'
+import formatting from '@/mixins/formatting.js'
 
 export default {
   name: 'EventDetail',
+  mixins: [formatting],
   components: {
     FormContainer
   },
