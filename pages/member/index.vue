@@ -71,7 +71,11 @@ export default {
   },
   methods: {
     async getMemberList() {
-      const { data, status } = await this.$axios.get('/member')
+      const { data, status } = await this.$axios.get('/member', {
+        params: {
+          sortBy: 'createTime:desc'
+        }
+      })
       if (status === 200) {
         this.members = data
       }

@@ -13,18 +13,18 @@
         <tr>
           <th>제목</th>
           <th>기간</th>
-          <th>참여인원(명)</th>
+          <th>참여 인원(명)</th>
         </tr>
       </thead>
       <tbody>
         <tr
-          v-for="{ title, startTime, endTime, _id } in events"
+          v-for="{ title, startTime, endTime, _id, groups } in events"
           :key="`tr_${_id}`"
           @click="handleClickRow(_id)"
         >
           <td>{{ title }}</td>
           <td>{{ formatDate(startTime) }} ~ {{ formatDate(endTime) }}</td>
-          <td>참여인원/참여팀</td>
+          <td>{{ getMemberLength(groups) }}</td>
         </tr>
       </tbody>
     </table>
@@ -47,7 +47,11 @@ export default {
   },
   methods: {
     async getEventList() {
-      const { data, status } = await this.$axios.get('/event')
+      const { data, status } = await this.$axios.get('/event', {
+        params: {
+          sortBy: 'createTime:desc'
+        }
+      })
       if (status !== 200) return
 
       this.events = data
@@ -57,6 +61,13 @@ export default {
     },
     handleClickRow(id) {
       this.$router.push(`/event/${id}`)
+    },
+    getMemberLength(groups) {
+      const total = groups.reduce((acc, group) => {
+        acc += group.memberList.length
+        return acc
+      }, 0)
+      return total
     }
   }
 }
